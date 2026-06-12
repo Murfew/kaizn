@@ -16,6 +16,7 @@ assignees: ''
 - [ ] Given … when … then …
 
 ## Scope
+
 **In:**
 **Out:** <!-- each out-of-scope item becomes its own `parking-lot` issue -->
 
@@ -23,6 +24,7 @@ assignees: ''
 <!-- Signposts only: links to the RIGHT docs + known gotchas. Not a recipe. -->
 
 ## Definition of Done
+
 - [ ] Type-check passes  
 - [ ] Lint clean  
 - [ ] Test added if there's logic
