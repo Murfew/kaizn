@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { env } from "@/env";
 import prisma from "@/lib/prisma";
 
 export const auth = betterAuth({
@@ -8,5 +9,10 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+  },
+  baseURL: {
+    allowedHosts: [env.VERCEL_URL, env.VERCEL_BRANCH_URL, env.VERCEL_PROJECT_PRODUCTION_URL].filter(
+      (url): url is string => Boolean(url),
+    ),
   },
 });

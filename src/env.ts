@@ -1,4 +1,4 @@
-import { supabaseVercel } from "@t3-oss/env-core/presets-zod";
+import { supabaseVercel, vercel } from "@t3-oss/env-core/presets-zod";
 import { createEnv } from "@t3-oss/env-nextjs";
 
 import * as z from "zod";
@@ -12,5 +12,5 @@ export const env = createEnv({
   client: {},
   experimental__runtimeEnv: {},
   emptyStringAsUndefined: true,
-  extends: [supabaseVercel()],
+  extends: [supabaseVercel(), vercel()],
 });
