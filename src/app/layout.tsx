@@ -1,23 +1,13 @@
-import { env } from "@/env";
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-const geist = Geist({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-sans",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-});
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={cn("font-sans antialiased", inter.variable)}>{children}</body>
     </html>
   );
 }
