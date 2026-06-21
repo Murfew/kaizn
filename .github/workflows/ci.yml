@@ -1,5 +1,9 @@
 name: CI Pipeline
 
+env:
+  POSTGRES_URL: postgresql://dummy:dummy@localhost/dummy
+  BETTER_AUTH_SECRET: dummy-secret-for-ci-typecheck
+
 on:
   push:
     branches: [main]
@@ -52,9 +56,6 @@ jobs:
         run: pnpm run biome:ci
 
       - name: Run Typecheck
-        env:
-          POSTGRES_URL: postgresql://dummy:dummy@localhost/dummy
-          BETTER_AUTH_SECRET: dummy-secret-for-ci-typecheck
         run: pnpm run typecheck
 
       - name: Run Build
