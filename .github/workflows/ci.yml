@@ -53,7 +53,8 @@ jobs:
 
       - name: Run Typecheck
         env:
-          SKIP_ENV_VALIDATION: 1
+          POSTGRES_URL: postgresql://dummy:dummy@localhost/dummy
+          BETTER_AUTH_SECRET: dummy-secret-for-ci-typecheck
         run: pnpm run typecheck
 
       - name: Run Build
