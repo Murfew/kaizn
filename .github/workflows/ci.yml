@@ -49,10 +49,10 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Run Biome (Lint & Format)
-        run: pnpm biome ci .
+        run: pnpm run biome:ci
 
       - name: Run Typecheck
-        run: pnpm typecheck
+        run: pnpm run typecheck
 
       - name: Run Build
         env:
