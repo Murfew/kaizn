@@ -1,8 +1,8 @@
 name: CI Pipeline
 
 env:
-  DATABASE_URL: "postgresql://dummy:dummy@localhost:6543/dummy"
-  DIRECT_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
+  POSTGRES_URL: postgresql://dummy:dummy@localhost/dummy
+  BETTER_AUTH_SECRET: dummy-secret-for-ci-typecheck
 
 on:
   push:
@@ -53,10 +53,10 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Run Biome (Lint & Format)
-        run: pnpm biome ci .
+        run: pnpm run biome:ci
 
       - name: Run Typecheck
-        run: pnpm exec tsc --noEmit
+        run: pnpm run typecheck
 
       - name: Run Build
         env:

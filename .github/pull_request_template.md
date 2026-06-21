@@ -8,4 +8,4 @@
 - [ ] Lint clean  
 - [ ] Test added if there's logic
 - [ ] Deployed to preview  
-- [ ] Merged via PR (`Closes #N`), CI green
+- [ ] CI green
