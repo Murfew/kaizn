@@ -18,7 +18,7 @@ export default function SignInPage() {
         </CardContent>
       </Card>
       <Typography className="mt-2 text-center">
-        Don't have an account?
+        Don't have an account?{" "}
         <Link href="/sign-up" className="text-primary">
           Sign up
         </Link>

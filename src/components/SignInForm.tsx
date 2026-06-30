@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -30,7 +31,6 @@ const formSchema = z.object({
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,19 +41,29 @@ export default function SignInForm() {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
-    setError("");
+  async function signInWithEmail(data: z.infer<typeof formSchema>) {
     await authClient.signIn.email(
       { ...data, callbackURL: "/availability" },
       {
-        onError: (ctx) => {
-          switch (ctx.error.message) {
-            case "CREDENTIAL_ACCOUNT_NOT_FOUND":
-              setError("Invalid email or password. Please try again.");
-              break;
-            default:
-              setError("Authentication failed. Please try again.");
-          }
+        onError: () => {
+          toast.error("Email sign-in failed. Please try again.", { position: "top-right" });
+        },
+        onRequest: () => {
+          setIsLoading(true);
+        },
+        onResponse: () => {
+          setIsLoading(false);
+        },
+      },
+    );
+  }
+
+  async function signInWithGoogle() {
+    await authClient.signIn.social(
+      { provider: "google" },
+      {
+        onError: () => {
+          toast.error("Google sign-in failed. Please try again.", { position: "top-right" });
         },
         onRequest: () => {
           setIsLoading(true);
@@ -67,9 +77,8 @@ export default function SignInForm() {
 
   return (
     <>
-      <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(signInWithEmail)}>
         <FieldGroup>
-          {error && <FieldError errors={[{ message: error }]} />}
           <Controller
             name="email"
             control={form.control}
@@ -156,7 +165,7 @@ export default function SignInForm() {
         </Typography>
         <Separator className="flex-1" />
       </div>
-      <Button variant="outline" size="lg" disabled={isLoading}>
+      <Button variant="outline" size="lg" disabled={isLoading} onClick={signInWithGoogle}>
         <FcGoogle /> Google
       </Button>
     </>
